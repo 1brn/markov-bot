@@ -40,6 +40,15 @@ $discord->on('ready', function (Discord $discord){
             } else{
                 $message->channel->sendMessage('bad command, use !add !commandname texttexttext');
             }
+        } elseif(str_starts_with($message->content, '!choose')){
+            $options = explode(',', $message->content);
+            $options[0] = substr($options[0],7);
+            if(empty($options[0]) || count($options) <= 1){
+                $message->channel->sendMessage('!choose comma, separated, values');
+            } else {
+                $message->channel->sendMessage($options[array_rand($options)]);
+            }
+
         } elseif(str_starts_with($message->content, '!')){
             $cmd_result = getCMD(openStickerDB(), $message->content);
             if($cmd_result){
